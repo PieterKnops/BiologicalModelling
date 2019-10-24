@@ -1,6 +1,6 @@
 model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
-    dWI <- r*WI*(1-WI/K) - c * WI * E; #effect wolven op eten?
+    dWI <- r*WI*(1-WI/K) - c * WI * E; #effect wolven op eten??
     dE <- r*E*(1-E/K) - E*WO/(1+WO);
     dWO <- c * E*WO/(1+WO) - WOd*WO;
     return(list(c(dWI, dE, dWO)))  
