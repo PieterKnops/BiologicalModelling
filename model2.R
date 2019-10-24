@@ -1,13 +1,14 @@
 model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
-    dWI <- r*WI*(1-WI/K) - c * WI * E; #effect wolven op eten??
-    dE <- r*E*(1-E/K) - E*WO/(1+WO);
-    dWO <- c * E*WO/(1+WO) - WOd*WO;
-    return(list(c(dWI, dE, dWO)))  
-  }) 
+    dWILG <- r*WILG*(1-WILG/K) - p * WILG * ELK; #effect wolven op eten??
+    dELK <- r*ELK*(1-ELK/K) - ELK*WOLF/(1+WOLF);
+    dWOLF <- c * E*WOLF/(1+WOLF) - WOLFd*WOLF;
+    return(list(c(dWILG, dELK, dWOLF)))  
+  })
 }  
 
-p <- c(r=1,K=10,WOd=0.13,c=0.1,WId=0.03)
-s <- c(WI=10,E=10,WO=0.01)
+p <- c(r=1,K=10,WOLFd=0.13,c=0.1,WILGd=0.03,p=0.1)
+s <- c(WILG=10,ELK=10,WOLF=1)
+run()
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
-newton(c(WI=10,E=3.605551,WO=0),plot=T)
+newton(c(WILG=10,ELK=3.605551,WOLF=0),plot=T)
