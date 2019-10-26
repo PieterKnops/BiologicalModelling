@@ -1,14 +1,14 @@
 model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
     dWILG <- rWILG*WILG*(1-WILG/K1) - p * WILG * ELK; # effect wolven op eten? De wilg en elk waren allebei afhankelijk van dezelfde K, heb ik veranderd.
-    dELK <- rELK*ELK*(1-ELK/K2) - ELK*WOLF/(1+WOLF)- ELK*BEAR/(1+BEAR); # verzadging helpen? Juvenile? Effect on 1?
-    dBEAR <- c2 * ELK*BEAR/(1+ELK) - deathBEAR*BEAR; # Mass action? Bears and Wolves birth rates were saturation of themselves instead of elk. I fixed this cause Im smart.
-    dWOLF <- c1 * ELK*WOLF/(1+ELK) - deathWOLF*WOLF; # Bears dont only eat ELKs
+    dELK <- rELK*ELK*(1-ELK/K2) - e2*ELK*WOLF/(1+WOLF)- e1*ELK*BEAR/(1+BEAR); # verzadging helpen? Juvenile? Effect on 1?
+    dBEAR <- c2*e1*ELK*BEAR/(1+ELK) - deathBEAR*BEAR; # Mass action? Bears and Wolves birth rates were saturation of themselves instead of elk. I fixed this cause Im smart.
+    dWOLF <- c1*e2*ELK*WOLF/(1+ELK) - deathWOLF*WOLF; # Bears dont only eat ELKs
     return(list(c(dWILG, dELK, dBEAR, dWOLF)))  # De conversiefactor van de beren was hetzelfde als hun death rate, heb ik ook veranderd.
   })
 }  
 
-p <- c(rWILG=1,rELK=1.0,K1=30000,K2=20000,c1=0.1,c2=0.2,d=0.02,deathWOLF=0.13,deathBEAR=0.042,deathWILG=0.022,p=0.02)
+p <- c(rWILG=1,rELK=1.0,K1=30000,K2=20000,c1=0.1,c2=0.2,e1=0.3,e2=0.4,d=0.02,deathWOLF=0.13,deathBEAR=0.042,deathWILG=0.022,p=0.02)
 s <- c(WILG=15000,ELK=16500,BEAR=400,WOLF=41)
 run(tmax=1000)
 
@@ -28,4 +28,5 @@ newton(c(WILG=10,ELK=3.605551,WOLF=0),plot=T)
 # We moeten p schatten zodat er zonder wolven vrijwel geen groei van wilgen plaatsvind maar met wolven een beetje.
 # Denk niet dat we die conversiefactor van elk naar beren uit de literatuur gaan halen, dus laten we maar een redelijke schatting maken.
 # The introduction of wolves has had a positive effect on the amount of bears. Should we simulate that? Impact of Wolf Reintroduction on Bison and Grizzly Bear Populations and Trophic Cascades in Yellowstone National Park Galina Lipkin Department of Biology Lake Forest College Lake Forest, Illinois
-# In 2014 waren er 757 grizzly's https://www.nps.gov/yell/learn/nature/grizzlybear.htm, en in 2011 waren er 500/600 zwarte beren https://yellowstone.net/wildlife/black-bears Beide populaties zijn sterk gestegen sinds de jaren 70.
+# Tegen de tijd dat wolven geintroduceerd werden was de beren populatie al sterk gegroeid tot zo'n 760 grizzly's en 550 zwarte beren. Hamlin et al. 2009, Barber-Meyer et al. 2008
+# Heb kill rates e1 en e2 toegevoegd.
