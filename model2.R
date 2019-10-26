@@ -1,7 +1,7 @@
 model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
     dWILG <- rWILG*WILG*(1-WILG/K1) - p * WILG * ELK; # effect wolven op eten? De wilg en elk waren allebei afhankelijk van dezelfde K, heb ik veranderd.
-    dELK <- rELK*ELK*(1-ELK/K2) - e1*ELK*WOLF/(h1+WOLF) - e2*ELK*BEAR/(h2+BEAR); # verzadging helpen? Juvenile? Effect on 1?
+    dELK <- rELK*ELK*(1-ELK/K2) - e1*ELK*WOLF/(h1+ELK) - e2*ELK*BEAR/(h2+ELK); # verzadging helpen? Juvenile? Effect on 1?
     dBEAR <- c2*e2*ELK*BEAR/(h2+ELK) - deathBEAR*BEAR; # Mass action? Bears and Wolves birth rates were saturation of themselves instead of elk. I fixed this cause Im smart.
     dWOLF <- c1*e1*ELK*WOLF/(h1+ELK) - deathWOLF*WOLF; # Bears dont only eat ELKs
     return(list(c(dWILG, dELK, dBEAR, dWOLF)))  # De conversiefactor van de beren was hetzelfde als hun death rate, heb ik ook veranderd.
