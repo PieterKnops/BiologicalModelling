@@ -8,12 +8,19 @@ model <- function(t, state, parms) {
   })
 }  
 
-p <- c(rWILG=1,rELK=1.0,K1=30000,K2=2,c1=0.05,c2=0.02,e2=3,e1=0.4,h1=1,h2=16500,deathWOLF=1/7,deathBEAR=1/24,deathWILG=0.022,p=0.000002)
-s <- c(WILG=100,ELK=9,BEAR=0.09,WOLF=0)
-run(tmax=80,tstep=0.01,after="if(t == 30) state[\"WOLF\"] = 100",ymax=100)
+p <- c(rWILG=1,rELK=1.0,K1=200,K2=20,c1=0.15,c2=0.2,e2=0.3,e1=0.8,h1=1,h2=8,deathWOLF=1/12,deathBEAR=1/24,deathWILG=0.022,p=0.000002)
+s <- c(WILG=100,ELK=10.55,BEAR=0.84,WOLF=0)
+run(tmax=1000,tstep=0.01,after="if(t == 30) state[\"WOLF\"] = 0.0264",ymax=20)
 
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
 newton(c(WILG=10,ELK=3.605551,WOLF=0),plot=T)
+
+#Heb de elk en beer per km2 voor wolven ingevuld in de starthoeveelheden.
+#Wilgen komen maar op 0.4 tot 0.8 % van het park voor. 0.6 x 1554 = 9.324 km2 Nu alleen nog schatten hoeveel bomen per km2.
+# Kunnen we wilgen op de een of andere manier scalen? Maakt de absolute hoeveelheid uit voor de dinamiek?
+# Heb de kill rate aangepast want die kan niet boven de 1 zijn.
+# Heb de saturatieconstate van de beer gezet op iets meer dan de helft van de elk. Dus bij onze begin hoeveelheden zou de groei dus meer dan half maximaal zijn
+
 
 # life expectancy wolves: https://www.yellowstonepark.com/things-to-do/wildlife/wolves 
 # life expectancy black bears, grizzly bear respectively: https://www.nps.gov/yell/learn/nature/black-bear.htm https://www.nps.gov/yell/learn/yellowstone-grizzly-bear-facts.htm
