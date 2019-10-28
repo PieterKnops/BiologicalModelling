@@ -1,16 +1,16 @@
 model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
     dWILG <- rWILG*WILG*(1-WILG/K1) - p * WILG * ELK; # effect wolven op eten? De wilg en elk waren allebei afhankelijk van dezelfde K, heb ik veranderd.
-    dELK <- rELK*ELK*(1-ELK/K2) - e1*ELK*WOLF/(h1+ELK) - e2*ELK*BEAR/(h2+ELK); # verzadging helpen? Juvenile? Effect on 1?
+    dELK  <- rELK*ELK*(1-ELK/K2) - e1*ELK*WOLF/(h1+ELK) - e2*ELK*BEAR/(h2+ELK); # verzadging helpen? Juvenile? Effect on 1?
     dBEAR <- c2*e2*ELK*BEAR/(h2+ELK) - deathBEAR*BEAR; # Mass action? Bears and Wolves birth rates were saturation of themselves instead of elk. I fixed this cause Im smart.
     dWOLF <- c1*e1*ELK*WOLF/(h1+ELK) - deathWOLF*WOLF; # Bears dont only eat ELKs
     return(list(c(dWILG, dELK, dBEAR, dWOLF)))  # De conversiefactor van de beren was hetzelfde als hun death rate, heb ik ook veranderd.
   })
 }  
 
-p <- c(rWILG=1,rELK=1.0,K1=30000,K2=20000,c1=0.05,c2=0.02,e2=0.3,e1=0.4,h1=1,h2=1,deathWOLF=0.13,deathBEAR=0.042,deathWILG=0.022,p=0.02)
-s <- c(WILG=15000,ELK=16500,BEAR=400,WOLF=41)
-run(tmax=1000)
+p <- c(rWILG=1,rELK=1.0,K1=30000,K2=2,c1=0.05,c2=0.02,e2=3,e1=0.4,h1=1,h2=16500,deathWOLF=1/7,deathBEAR=1/24,deathWILG=0.022,p=0.000002)
+s <- c(WILG=100,ELK=1.5,BEAR=0.015,WOLF=0)
+run(tmax=100,tstep=0.01)
 
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
 newton(c(WILG=10,ELK=3.605551,WOLF=0),plot=T)
