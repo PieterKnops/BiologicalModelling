@@ -9,8 +9,8 @@ model <- function(t, state, parms) {
 }  
 
 p <- c(rWILG=1,rELK=1.0,K1=30000,K2=2,c1=0.05,c2=0.02,e2=3,e1=0.4,h1=1,h2=16500,deathWOLF=1/7,deathBEAR=1/24,deathWILG=0.022,p=0.000002)
-s <- c(WILG=100,ELK=1.5,BEAR=0.015,WOLF=0)
-run(tmax=100,tstep=0.01)
+s <- c(WILG=100,ELK=9,BEAR=0.09,WOLF=0)
+run(tmax=80,tstep=0.01,after="if(t == 30) state[\"WOLF\"] = 100",ymax=100)
 
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
 newton(c(WILG=10,ELK=3.605551,WOLF=0),plot=T)
