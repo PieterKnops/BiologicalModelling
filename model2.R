@@ -2,13 +2,13 @@ model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
     dWILG <- rWILG*WILG*(1-WILG/K1) - p * WILG * ELK; # effect wolven op eten? De wilg en elk waren allebei afhankelijk van dezelfde K, heb ik veranderd.
     dELK  <- rELK*ELK*(1-ELK/K2) - e1*ELK*WOLF/(h1+ELK) - e2*ELK*BEAR/(h2+ELK); # verzadging helpen? Juvenile? Effect on 1?
-    dBEAR <- c2*e2*ELK*BEAR/(h2+ELK) - deathBEAR*BEAR; # Mass action? Bears and Wolves birth rates were saturation of themselves instead of elk. I fixed this cause Im smart.
-    dWOLF <- c1*e1*ELK*WOLF/(h1+ELK) - deathWOLF*WOLF*(1+WOLF/z); # Bears dont only eat ELKs
+    dBEAR <- c2*e2*ELK*BEAR/(h2+ELK) - deathBEAR*BEAR*(1+BEAR/z2); # Mass action? Bears and Wolves birth rates were saturation of themselves instead of elk. I fixed this cause Im smart.
+    dWOLF <- c1*e1*ELK*WOLF/(h1+ELK) - deathWOLF*WOLF*(1+WOLF/z1); # Bears dont only eat ELKs
     return(list(c(dWILG, dELK, dBEAR, dWOLF)))  # De conversiefactor van de beren was hetzelfde als hun death rate, heb ik ook veranderd.
   })
 }  
 
-p <- c(rWILG=1,rELK=1.0,K1=200,K2=20,c1=0.5,c2=0.2,e2=0.3,e1=0.75,h1=4,h2=7.5,deathWOLF=1/12,deathBEAR=1/24,deathWILG=0.022,p=0.000002,z=0.7)
+p <- c(rWILG=1,rELK=1.0,K1=200,K2=20,c1=0.5,c2=0.2,e2=0.3,e1=0.75,h1=4,h2=7.5,deathWOLF=1/12,deathBEAR=1/24,deathWILG=0.022,p=0.000002,z1=0.7,z2=30)
 s <- c(WILG=100,ELK=10.55,BEAR=0.84,WOLF=0)
 run(tmax=500,tstep=0.01,after="if(t == 30) state[\"WOLF\"] = 0.0264",ymax=10)
 
