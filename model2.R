@@ -8,7 +8,7 @@ model <- function(t, state, parms) {
   })
 }  
 
-p <- c(rWILG=1,rELK=1.0,K1=20,K2=20,c1=0.5,c2=0.01,e2=7,e1=0.75,h1=4,h2=7.5,deathWOLF=1/12,deathBEAR=1/24,p=1/30,z1=0.7,z2=30)
+p <- c(rWILG=1,rELK=1.0,K1=20,K2=20,c1=0.05,c2=0.01,e2=7,e1=10,h1=4,h2=7.5,deathWOLF=1/12,deathBEAR=1/24,p=1/30,z1=0.7,z2=30)
 s <- c(WILG=13,ELK=10.55,BEAR=0.84,WOLF=0)
 run(tmax=100,tstep=0.01,after="if(t == 30) state[\"WOLF\"] = 0.0264",ymax=20)
 
