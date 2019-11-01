@@ -9,9 +9,20 @@ model <- function(t, state, parms) {
 
 p <- c(rFIR=10,rMOOSE=0.5,K1=20,K2=5.6,c=1/15,e=10,h=4,deathWOLF=1/12,p=1.8,z=0.7,deathMOOSE = 1/10)
 s <- c(FIR=13,MOOSE=1.68,WOLF=0.1)
-run(tmax=100,tstep=0.1,after="if(t == 12) {state[\"WOLF\"] = 0.2 * state[\"WOLF\"]; parms[\"deathWOLF\"] = 1/6; parms[\"c\"] = 1/30; };
-                             if(t == 26) {state[\"MOOSE\"] = 0.4 * state[\"MOOSE\"];};
-                             if(t == 28) {parms[\"deathWOLF\"] = 1/12; state[\"WOLF\"] = state[\"WOLF\"] + 1 / 535; parms[\"c\"] = 1/15 }",ymax=10) # conversiefactor want gezondere jongeren
+run(tmax=40,tstep=0.1,after="
+  if(t == 12) {
+    state[\"WOLF\"] = 0.2 * state[\"WOLF\"];
+    parms[\"deathWOLF\"] = 1/6; parms[\"c\"] = 1/30;
+  };
+  if(t == 26) {
+    state[\"MOOSE\"] = 0.4 * state[\"MOOSE\"];
+  };
+  if(t == 28) {
+    parms[\"deathWOLF\"] = 1/12;
+    state[\"WOLF\"] = state[\"WOLF\"] + 1 / 535;
+    parms[\"c\"] = 1/15
+  }"
+    ,ymax=20)
 
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
 newton(c(FIR=10,MOOSE=3.605551,WOLF=0),plot=T)
