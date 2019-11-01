@@ -22,7 +22,7 @@ run(tmax=50,tstep=0.1,after="
     state[\"WOLF\"] = state[\"WOLF\"] + 1 / 535;
     parms[\"c\"] = 1/15
   }"
-    ,ymax=20)
+    ,ymax=5)
 
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
 newton(c(FIR=10,MOOSE=3.605551,WOLF=0),plot=T)
