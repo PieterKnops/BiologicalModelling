@@ -7,7 +7,7 @@ model <- function(t, state, parms) {
   })
 }  
 
-p <- c(rFIR=10,rMOOSE=0.5,K1=20,K2=5.6,c=1/10,e=10,h=4,deathWOLF=1/6,p=1.8,z=0.7,deathMOOSE = 1/10)
+p <- c(rFIR=10,rMOOSE=0.5,K1=20,K2=5.6,c=1/15,e=10,h=4,deathWOLF=1/6,p=1.8,z=0.7,deathMOOSE = 1/10)
 s <- c(FIR=13,MOOSE=1.68,WOLF=0.1)
 run(tmax=50,tstep=0.1,after="
   if(t == 12) {
