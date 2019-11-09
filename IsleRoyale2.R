@@ -1,7 +1,7 @@
 model <- function(t, state, parms) {
   with(as.list(c(state,parms)), {
     dFIR <- rFIR*FIR*(1-FIR/K1) - p * FIR * MOOSE;
-    dMOOSE <- rMOOSE*MOOSE*(1-MOOSE/K2) - e*MOOSE*WOLF/(h+MOOSE) - deathMOOSE*MOOSE;
+    dMOOSE <- rMOOSE*MOOSE*(1-MOOSE/K2) - e*MOOSE*WOLF/(h+MOOSE);
     dWOLF <- c*e*MOOSE*WOLF/(h+MOOSE) - deathWOLF*WOLF;
     return(list(c(dFIR, dMOOSE, dWOLF)))
   })
@@ -22,7 +22,7 @@ run(tmax=50,tstep=0.1,after="
     state[\"WOLF\"] = state[\"WOLF\"] + 1 / 535;
     parms[\"c\"] = 1/15
   }"
-    ,ymax=4,xlab = "Time (years)", ylab="Density per km2")
+    ,ymax=1,xlab = "Time (years)", ylab="Density per km2")
 
 plane(xmax=20,ymax=10,eps=-0.01);f<-run(traject=T)
 newton(c(FIR=10,MOOSE=3.605551,WOLF=0),plot=T)
